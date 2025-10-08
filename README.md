@@ -1,13 +1,21 @@
-<<<<<<< HEAD
-# 40005-Advanced-iOS-Assignment4-AeroLog
-=======
 #### Link to Git Repository: https://github.com/yuhan0113/40005-Advanced-iOS-Assignment2-AeroLog.git
 
-## 40005-Advanced-iOS-Assignment2-AeroLog
-## 40005-Advanced-iOS-Assignment3-AeroLog (Extended from Assignment 2)
+# 40005-Advanced-iOS-Assignment4-AeroLog
+
 ## ✈️ AeroLog — Travel Task Management App
 
 _Aerolog_ is a SwiftUI-based iOS application designed to help travellers manage trip-related tasks with clarity and ease. Developed for **Assessment Task 2** in the subject **40005 Advanced iOS**, this project showcases the integration of **object-oriented** and **protocol-oriented** programming, clean MVVM architecture, structured error handling, unit testing, and proper version control with Git.
+
+---
+
+## Authors
+Riley Martin - 24953729
+
+Yu-Han Chang (John) - 14542423
+
+Subject: 40005 Advanced iOS Development
+
+Bachelor of IT, University of Technology Sydney
 
 ---
 
@@ -238,13 +246,3 @@ Example:
 🛠️ Debugging: Used Xcode’s View Debugger and print() tracing to verify model updates
 
 ---
-
-## Author
-Student: Yu-Han Chang (John)
-
-Student ID: 14542423
-
-Subject: 40005 Advanced iOS Development
-
-Bachelor of IT, University of Technology Sydney
->>>>>>> f2ee75d (Initial commit for Assignment 4 – AeroLog)
