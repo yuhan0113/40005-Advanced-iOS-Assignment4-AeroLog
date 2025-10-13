@@ -5,6 +5,8 @@
 //  Created by Yu-Han on 6/9/2025.
 //  Flight-specific task model
 //
+//  Edited by Riley Martin on 13/10/2025
+//
 
 import Foundation
 
@@ -16,6 +18,7 @@ class FlightTask: BaseTask {
     var departureTime: String
     var arrivalTime: String
     var airline: Airline
+    var arrivalDayOffset: Int
 
     init(id: UUID = UUID(),
          title: String,
@@ -26,6 +29,7 @@ class FlightTask: BaseTask {
          arrivalTime: String,
          dueDate: Date,
          airline: Airline,
+         arrivalDayOffset: Int = 0,
          isCompleted: Bool = false) {
 
         self.flightNumber = flightNumber
@@ -34,6 +38,7 @@ class FlightTask: BaseTask {
         self.departureTime = departureTime
         self.arrivalTime = arrivalTime
         self.airline = airline
+        self.arrivalDayOffset = arrivalDayOffset
 
         // Pass id, title, dueDate, and isCompleted to BaseTask
         super.init(id: id, title: title, dueDate: dueDate, isCompleted: isCompleted)

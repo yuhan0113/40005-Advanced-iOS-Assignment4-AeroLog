@@ -5,6 +5,8 @@
 //  Created by Yu-Han on 6/9/2025.
 //  Handles task logic and state (MVVM) with CoreData persistence
 //
+//  Edited by Riley Martin on 13/10/2025
+//
 
 import Foundation
 import CoreData
@@ -27,11 +29,24 @@ class TaskViewModel: ObservableObject {
                  departureTime: String,
                  arrivalTime: String,
                  dueDate: Date,
-                 airline: Airline) throws {
+                 airline: Airline,
+                 arrivalDayOffset: Int = 0) throws {
         
         // Ensure required fields are provided
         guard !title.isEmpty, !flightNumber.isEmpty else {
             throw TaskError.invalidInput
+        }
+        
+        let calendar = Calendar.current
+        let dueDateDay = calendar.startOfDay(for: dueDate)
+        
+        let isDuplicate = tasks.contains { task in
+            let taskDay = calendar.startOfDay(for: task.dueDate)
+            return task.flightNumber == flightNumber && taskDay == dueDateDay
+        }
+        
+        guard !isDuplicate else {
+            throw TaskError.duplicateFlight
         }
 
         // Create the model object
@@ -43,7 +58,8 @@ class TaskViewModel: ObservableObject {
             departureTime: departureTime,
             arrivalTime: arrivalTime,
             dueDate: dueDate,
-            airline: airline
+            airline: airline,
+            arrivalDayOffset: arrivalDayOffset
         )
 
         // Save to CoreData
@@ -57,6 +73,7 @@ class TaskViewModel: ObservableObject {
         entity.arrivalTime = newTask.arrivalTime
         entity.dueDate = newTask.dueDate
         entity.airlineRaw = newTask.airline.rawValue
+        entity.arrivalDayOffset = Int16(newTask.arrivalDayOffset)
         entity.isCompleted = newTask.isCompleted
 
         saveAndReload()
@@ -65,6 +82,7 @@ class TaskViewModel: ObservableObject {
     /// Fetches tasks from CoreData
     func fetchTasks() {
         let request: NSFetchRequest<FlightTaskEntity> = FlightTaskEntity.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "dueDate", ascending: true)]
         do {
             let entities = try context.fetch(request)
             self.tasks = entities.map {
@@ -78,11 +96,12 @@ class TaskViewModel: ObservableObject {
                     arrivalTime: $0.arrivalTime ?? "",
                     dueDate: $0.dueDate ?? Date(),
                     airline: Airline(rawValue: $0.airlineRaw ?? "") ?? .qantas,
+                    arrivalDayOffset: Int($0.arrivalDayOffset),
                     isCompleted: $0.isCompleted
                 )
             }
         } catch {
-            print("❌ Failed to fetch tasks: \(error.localizedDescription)")
+            //
         }
     }
     

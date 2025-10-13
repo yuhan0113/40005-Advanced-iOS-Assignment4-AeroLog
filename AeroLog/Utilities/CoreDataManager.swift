@@ -23,7 +23,7 @@ class CoreDataManager {
         do {
             try context.save()
         } catch {
-            print("❌ Error saving Core Data context: \(error.localizedDescription)")
+            //
         }
     }
 }

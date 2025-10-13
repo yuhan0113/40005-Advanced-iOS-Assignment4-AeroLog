@@ -3,15 +3,16 @@
 
 import Foundation
 
-// Defines custom error types for task-related issues
 enum TaskError: Error, LocalizedError {
     case invalidInput
+    case duplicateFlight
     
-    // Display user-readable error messages
     var errorDescription: String? {
         switch self {
         case .invalidInput:
             return "All required fields must be filled in."
+        case .duplicateFlight:
+            return "This flight has already been added to your log."
         }
     }
 }
