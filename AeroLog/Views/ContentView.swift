@@ -9,12 +9,14 @@
 //
 
 import SwiftUI
+import MessageUI
 
 struct ContentView: View {
     @StateObject private var viewModel = TaskViewModel()
     @State private var showFlightSearch = false
     @State private var sheetDetent: PresentationDetent = .height(240)
     @State private var showingResults = false
+    @State private var shareTask: FlightTask?
 
     var groupedFlights: [(date: Date, flights: [FlightTask])] {
         let grouped = Dictionary(grouping: viewModel.tasks) { task in
@@ -92,6 +94,12 @@ struct ContentView: View {
                                         }
                                         .buttonStyle(PlainButtonStyle())
                                         .contextMenu {
+                                            Button {
+                                                shareTask = task
+                                            } label: {
+                                                Label("Share Flight", systemImage: "square.and.arrow.up")
+                                            }
+                                            
                                             Button(role: .destructive) {
                                                 deleteTask(task)
                                             } label: {
@@ -115,6 +123,9 @@ struct ContentView: View {
                         await refreshFlights()
                     }
                 }
+            }
+            .sheet(item: $shareTask) { task in
+                ShareSheetView(items: [generateShareMessage(for: task)])
             }
             .navigationTitle("My Flights")
             .navigationBarTitleDisplayMode(.large)
@@ -186,11 +197,34 @@ struct ContentView: View {
         }
     }
     
+    private func generateShareMessage(for task: FlightTask) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE, MMMM d"
+        let dateString = dateFormatter.string(from: task.dueDate)
+        
+        return """
+        I'm flying on \(task.airline.rawValue) flight \(task.flightNumber) on \(dateString) at \(task.departureTime) from \(task.departure) to \(task.arrival).
+        
+        Track my flight on AeroLog or search for flight \(task.flightNumber) to follow along!
+        """
+    }
+    
     private func refreshFlights() async {
         await MainActor.run {
             viewModel.fetchTasks()
         }
     }
+}
+
+struct ShareSheetView: UIViewControllerRepresentable {
+    let items: [Any]
+    
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        let controller = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        return controller
+    }
+    
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
 
 #Preview {
