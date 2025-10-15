@@ -2,8 +2,7 @@
 //  ContentView.swift
 //  AeroLog
 //
-//  Created by Yu-Han on 6/9/2025.
-//  Dashboard UI shows "My Flights"
+//  Created by Yu-Han on 06/09/2025
 //
 //  Edited by Riley Martin on 13/10/2025
 //

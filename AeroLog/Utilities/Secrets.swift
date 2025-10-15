@@ -2,7 +2,7 @@
 //  Secrets.swift
 //  AeroLog
 //
-//  Created by Yu-Han on 6/10/2025.
+//  Created by Yu-Han on 06/10/2025
 //
 
 import Foundation

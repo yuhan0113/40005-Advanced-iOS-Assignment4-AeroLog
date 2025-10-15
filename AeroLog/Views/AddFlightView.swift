@@ -2,8 +2,7 @@
 //  AddFlightView.swift
 //  AeroLog
 //
-//  Created by Yu-Han on 6/9/2025.
-//  UI to add a new flight task
+//  Created by Yu-Han on 06/09/2025
 //
 
 import SwiftUI

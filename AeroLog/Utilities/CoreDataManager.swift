@@ -1,3 +1,10 @@
+//
+//  CoreDataManager.swift
+//  AeroLog
+//
+//  Created by Yu-Han on 06/10/2025
+//
+
 import Foundation
 import CoreData
 

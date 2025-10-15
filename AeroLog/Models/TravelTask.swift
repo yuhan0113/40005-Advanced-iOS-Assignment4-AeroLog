@@ -1,5 +1,8 @@
-//  Created by Yu-Han on 6/9/2025.
-//  Protocol for all travel tasks
+//
+//  TravelTask.swift
+//  AeroLog
+//
+//  Created by Yu-Han on 04/09/2025
 
 import Foundation
 

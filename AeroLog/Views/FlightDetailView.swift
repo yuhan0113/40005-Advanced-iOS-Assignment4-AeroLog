@@ -2,11 +2,10 @@
 //  FlightDetailView.swift
 //  AeroLog
 //
-//  Created by Yu-Han on 6/9/2025.
-//  Flight detail screen: weather, gate, and timing
+//  Created by Yu-Han on 06/09/2025
 //
 //  Edited by Riley Martin on 13/10/2025
-//
+//  Edited by Yu-Han on 15/10/2025
 
 import SwiftUI
 import CoreLocation
@@ -20,12 +19,15 @@ struct FlightDetailView: View {
     @State private var planeCoordinate: CLLocationCoordinate2D?
     @State private var liveFlightData: FlightSearchResult?
     @State private var isFlightActive = false
+    @State private var arrivalWeather: WeatherResponse?
+    @State private var weatherError: String = ""
     @State private var mapRegion = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 0, longitude: 0),
         span: MKCoordinateSpan(latitudeDelta: 50, longitudeDelta: 50)
     )
 
     let flightService = FlightSearchService.shared
+    let weatherService = WeatherService()
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -57,6 +59,19 @@ struct FlightDetailView: View {
                 VStack(spacing: 0) {
                     FlightInfoCard(task: task)
                         .frame(height: 280)
+
+                    if let weather = arrivalWeather {
+                        WeatherSummaryView(weather: weather)
+                            .padding(.horizontal, 16)
+                            .padding(.top, 8)
+                            .transition(.opacity)
+                    } else if !weatherError.isEmpty {
+                        Text(weatherError)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.horizontal, 16)
+                            .padding(.top, 8)
+                    }
                 }
                 .background(.ultraThinMaterial)
                 .cornerRadius(24, corners: [.topLeft, .topRight])
@@ -87,6 +102,16 @@ struct FlightDetailView: View {
         await arrivalTask
         
         await fetchLiveFlightDataIfActive()
+
+        // Fetch arrival weather once we have arrival coordinate
+        if let arr = arrivalCoordinate {
+            do {
+                let weather = try await weatherService.fetchWeather(for: arr)
+                await MainActor.run { self.arrivalWeather = weather }
+            } catch {
+                await MainActor.run { self.weatherError = "Unable to load weather." }
+            }
+        }
         
         await MainActor.run {
             if let dep = departureCoordinate, let arr = arrivalCoordinate {
@@ -460,6 +485,41 @@ struct FlightInfoCard: View {
             }
         }
         .padding(24)
+    }
+}
+
+struct WeatherSummaryView: View {
+    let weather: WeatherResponse
+    
+    var body: some View {
+        HStack(spacing: 12) {
+            Image(systemName: weather.current.weather_icons.first ?? "cloud")
+                .font(.title2)
+                .foregroundColor(.blue)
+            
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Arrival Weather — \(weather.location.name), \(weather.location.country)")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                Text(weather.current.weather_descriptions.first ?? "—")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            
+            Spacer()
+            
+            VStack(alignment: .trailing) {
+                Text("\(Int(weather.current.temperature))°C")
+                    .font(.headline)
+                Text("Wind \(weather.current.wind_speed) km/h")
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+            }
+        }
+        .padding(12)
+        .background(Color(.systemBackground))
+        .cornerRadius(12)
+        .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
     }
 }
 

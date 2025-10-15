@@ -1,5 +1,8 @@
-//  Created by Yu-Han on 6/9/2025.
-//  Simple weather model with randomised mock data
+//
+//  Weather.swift
+//  AeroLog
+//
+//  Created by Yu-Han on 06/09/2025
 
 import SwiftUI
 
