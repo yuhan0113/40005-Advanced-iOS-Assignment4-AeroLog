@@ -29,6 +29,27 @@ struct FlightDetailView: View {
     let flightService = FlightSearchService.shared
     let weatherService = WeatherService()
 
+    // MARK: - Distance/Duration helpers
+    var routeDistanceKm: Double? {
+        guard let dep = departureCoordinate, let arr = arrivalCoordinate else { return nil }
+        return Self.haversineDistanceKm(from: dep, to: arr)
+    }
+
+    var scheduledDurationHours: Double? {
+        guard let (dep, arr) = parseFlightTimes() else { return nil }
+        let seconds = arr.timeIntervalSince(dep)
+        return max(0, seconds) / 3600.0
+    }
+
+    static func haversineDistanceKm(from: CLLocationCoordinate2D, to: CLLocationCoordinate2D) -> Double {
+        let earthRadiusKm = 6371.0
+        let dLat = (to.latitude - from.latitude) * .pi / 180
+        let dLon = (to.longitude - from.longitude) * .pi / 180
+        let a = sin(dLat/2) * sin(dLat/2) + cos(from.latitude * .pi / 180) * cos(to.latitude * .pi / 180) * sin(dLon/2) * sin(dLon/2)
+        let c = 2 * atan2(sqrt(a), sqrt(1 - a))
+        return earthRadiusKm * c
+    }
+
     var body: some View {
         ZStack(alignment: .bottom) {
             FlightMapView(
@@ -71,6 +92,13 @@ struct FlightDetailView: View {
                             .foregroundColor(.secondary)
                             .padding(.horizontal, 16)
                             .padding(.top, 8)
+                    }
+
+                    if let km = routeDistanceKm, let hours = scheduledDurationHours {
+                        RouteStatsView(distanceKm: km, durationHours: hours)
+                            .padding(.horizontal, 16)
+                            .padding(.top, 8)
+                            .transition(.opacity)
                     }
                 }
                 .background(.ultraThinMaterial)
@@ -520,6 +548,41 @@ struct WeatherSummaryView: View {
         .background(Color(.systemBackground))
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
+    }
+}
+
+struct RouteStatsView: View {
+    let distanceKm: Double
+    let durationHours: Double
+
+    var body: some View {
+        HStack {
+            Label("Distance", systemImage: "ruler")
+                .font(.caption)
+                .foregroundColor(.secondary)
+            Text("\(String(format: "%.0f", distanceKm)) km")
+                .font(.subheadline)
+                .fontWeight(.semibold)
+
+            Spacer()
+
+            Label("Duration", systemImage: "clock")
+                .font(.caption)
+                .foregroundColor(.secondary)
+            Text(Self.formatHours(durationHours))
+                .font(.subheadline)
+                .fontWeight(.semibold)
+        }
+        .padding(12)
+        .background(Color(.systemBackground))
+        .cornerRadius(12)
+        .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
+    }
+
+    private static func formatHours(_ hours: Double) -> String {
+        let h = Int(hours)
+        let m = Int((hours - Double(h)) * 60)
+        return "\(h)h \(m)m"
     }
 }
 
