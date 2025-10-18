@@ -2,7 +2,7 @@
 //  AeroLogWidgetControl.swift
 //  AeroLogWidget
 //
-//  Created by 張宇漢 on 18/10/2025.
+//  Created by Yu-Han on 18/10/2025.
 //
 
 import AppIntents
@@ -10,7 +10,7 @@ import SwiftUI
 import WidgetKit
 
 struct AeroLogWidgetControl: ControlWidget {
-    static let kind: String = "com.yuhanchang.aerolog2025.AeroLogWidget"
+    static let kind: String = "AeroLogWidgetControl"
 
     var body: some ControlWidgetConfiguration {
         AppIntentControlConfiguration(
@@ -18,60 +18,63 @@ struct AeroLogWidgetControl: ControlWidget {
             provider: Provider()
         ) { value in
             ControlWidgetToggle(
-                "Start Timer",
-                isOn: value.isRunning,
-                action: StartTimerIntent(value.name)
-            ) { isRunning in
-                Label(isRunning ? "On" : "Off", systemImage: "timer")
+                "Flight Reminder",
+                isOn: value.remindersEnabled,
+                action: ToggleReminderIntent(value.flightNumber)
+            ) { isEnabled in
+                Label(isEnabled ? "Reminders On" : "Reminders Off", systemImage: "bell")
             }
         }
-        .displayName("Timer")
-        .description("A an example control that runs a timer.")
+        .displayName("Flight Reminders")
+        .description("Toggle flight reminder notifications.")
     }
 }
 
 extension AeroLogWidgetControl {
     struct Value {
-        var isRunning: Bool
-        var name: String
+        var remindersEnabled: Bool
+        var flightNumber: String
     }
 
     struct Provider: AppIntentControlValueProvider {
-        func previewValue(configuration: TimerConfiguration) -> Value {
-            AeroLogWidgetControl.Value(isRunning: false, name: configuration.timerName)
+        func previewValue(configuration: FlightConfiguration) -> Value {
+            AeroLogWidgetControl.Value(remindersEnabled: true, flightNumber: configuration.flightNumber)
         }
 
-        func currentValue(configuration: TimerConfiguration) async throws -> Value {
-            let isRunning = true // Check if the timer is running
-            return AeroLogWidgetControl.Value(isRunning: isRunning, name: configuration.timerName)
+        func currentValue(configuration: FlightConfiguration) async throws -> Value {
+            // Check if reminders are enabled for this flight
+            let remindersEnabled = true // This would check the actual reminder status
+            return AeroLogWidgetControl.Value(remindersEnabled: remindersEnabled, flightNumber: configuration.flightNumber)
         }
     }
 }
 
-struct TimerConfiguration: ControlConfigurationIntent {
-    static let title: LocalizedStringResource = "Timer Name Configuration"
+struct FlightConfiguration: ControlConfigurationIntent {
+    static let title: LocalizedStringResource = "Flight Configuration"
 
-    @Parameter(title: "Timer Name", default: "Timer")
-    var timerName: String
+    @Parameter(title: "Flight Number", default: "QF123")
+    var flightNumber: String
 }
 
-struct StartTimerIntent: SetValueIntent {
-    static let title: LocalizedStringResource = "Start a timer"
+struct ToggleReminderIntent: SetValueIntent {
+    static let title: LocalizedStringResource = "Toggle Flight Reminder"
 
-    @Parameter(title: "Timer Name")
-    var name: String
+    @Parameter(title: "Flight Number")
+    var flightNumber: String
 
-    @Parameter(title: "Timer is running")
+    @Parameter(title: "Reminders Enabled")
     var value: Bool
 
     init() {}
 
-    init(_ name: String) {
-        self.name = name
+    init(_ flightNumber: String) {
+        self.flightNumber = flightNumber
     }
 
     func perform() async throws -> some IntentResult {
-        // Start the timer…
+        // Toggle flight reminder notifications
+        // This would interact with the NotificationManager
         return .result()
     }
 }
+

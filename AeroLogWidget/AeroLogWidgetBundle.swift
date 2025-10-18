@@ -2,7 +2,7 @@
 //  AeroLogWidgetBundle.swift
 //  AeroLogWidget
 //
-//  Created by 張宇漢 on 18/10/2025.
+//  Created by Yu-Han on 18/10/2025.
 //
 
 import WidgetKit
