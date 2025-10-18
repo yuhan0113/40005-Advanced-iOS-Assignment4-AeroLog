@@ -1,4 +1,4 @@
-//  Created by Yu-Han on 6/9/2025.
+//  Created by Yu-Han on 06/09/2025.
 //  App entry point for AeroLog
 //
 //  Edited by Riley Martin on 13/10/2025

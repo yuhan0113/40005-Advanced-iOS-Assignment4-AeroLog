@@ -149,6 +149,7 @@ struct ContentView: View {
             }
             .onAppear {
                 viewModel.fetchTasks()
+                checkForSharedFlightCode()
             }
             .sheet(isPresented: $showFlightSearch) {
                 FlightSearchView(viewModel: viewModel, sheetDetent: $sheetDetent, showingResults: $showingResults)
@@ -188,6 +189,21 @@ struct ContentView: View {
     private func refreshFlights() async {
         await MainActor.run {
             viewModel.fetchTasks()
+        }
+    }
+    
+    private func checkForSharedFlightCode() {
+        let userDefaults = UserDefaults(suiteName: "group.com.yuhanchang.aerolog2025")
+        if let sharedFlightCode = userDefaults?.string(forKey: "sharedFlightCode") {
+            // Clear the shared code
+            userDefaults?.removeObject(forKey: "sharedFlightCode")
+            userDefaults?.removeObject(forKey: "sharedFlightCodeDate")
+            
+            // Show flight search with the shared code
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                showFlightSearch = true
+                // You could pre-populate the search field here if needed
+            }
         }
     }
 }

@@ -104,4 +104,3 @@ class WeatherService {
         return "cloud.sun"
     }
 }
-
