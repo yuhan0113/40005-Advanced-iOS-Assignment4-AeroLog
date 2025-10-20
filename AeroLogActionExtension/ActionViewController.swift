@@ -16,38 +16,25 @@ class ActionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Get the extension context
+        // Process the input immediately
+        processInput()
+    }
+    
+    private func processInput() {
         guard let extensionItem = extensionContext?.inputItems.first as? NSExtensionItem,
               let itemProvider = extensionItem.attachments?.first else {
             completeRequest()
             return
         }
         
-        // Check if the item is text
+        // Check for text
         if itemProvider.hasItemConformingToTypeIdentifier(UTType.plainText.identifier) {
             itemProvider.loadItem(forTypeIdentifier: UTType.plainText.identifier, options: nil) { [weak self] (item, error) in
-                guard let self = self,
-                      let text = item as? String else {
-                    DispatchQueue.main.async {
-                        self?.completeRequest()
-                    }
-                    return
-                }
-                
-                // Extract flight code from shared text
-                let flightCode = self.extractFlightCode(from: text)
-                
                 DispatchQueue.main.async {
-                    if let flightCode = flightCode {
-                        self.saveFlightCodeToUserDefaults(flightCode)
-                        self.showSuccessMessage(flightCode: flightCode)
+                    if let text = item as? String {
+                        self?.processText(text)
                     } else {
-                        self.showErrorMessage()
-                    }
-                    
-                    // Delay to show message before closing
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        self.completeRequest()
+                        self?.completeRequest()
                     }
                 }
             }
@@ -56,39 +43,46 @@ class ActionViewController: UIViewController {
         }
     }
     
-    // MARK: - Helper Methods
+    private func processText(_ text: String) {
+        // Extract flight code
+        let flightCode = extractFlightCode(from: text)
+        
+        if let flightCode = flightCode {
+            // Save to UserDefaults
+            saveFlightCode(flightCode)
+            
+            // Show success message
+            showAlert(title: "Flight Added", message: "Flight \(flightCode) added to AeroLog!")
+        } else {
+            // Show error message
+            showAlert(title: "No Flight Code", message: "No valid flight code found in the selected text.")
+        }
+    }
     
     private func extractFlightCode(from text: String) -> String? {
-        // Look for flight codes like QF123, AA456, etc.
         let pattern = #"[A-Z]{2,3}\d{1,4}"#
         let regex = try? NSRegularExpression(pattern: pattern, options: [])
         let range = NSRange(location: 0, length: text.utf16.count)
         
         if let match = regex?.firstMatch(in: text, options: [], range: range) {
-            let flightCode = (text as NSString).substring(with: match.range)
-            return flightCode
+            return (text as NSString).substring(with: match.range)
         }
         
         return nil
     }
     
-    private func saveFlightCodeToUserDefaults(_ flightCode: String) {
+    private func saveFlightCode(_ flightCode: String) {
         let userDefaults = UserDefaults(suiteName: "group.com.yuhanchang.aerolog2025")
         userDefaults?.set(flightCode, forKey: "sharedFlightCode")
         userDefaults?.set(Date(), forKey: "sharedFlightCodeDate")
+        userDefaults?.synchronize()
     }
     
-    private func showSuccessMessage(flightCode: String) {
-        let alert = UIAlertController(title: "Flight Added",
-                                    message: "Flight code \(flightCode) added to AeroLog. Open the app to add it to your flights.",
-                                    preferredStyle: .alert)
-        present(alert, animated: true)
-    }
-    
-    private func showErrorMessage() {
-        let alert = UIAlertController(title: "Invalid Flight Code",
-                                    message: "Please select text containing a valid flight code (e.g., QF123, AA456).",
-                                    preferredStyle: .alert)
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+            self.completeRequest()
+        })
         present(alert, animated: true)
     }
     

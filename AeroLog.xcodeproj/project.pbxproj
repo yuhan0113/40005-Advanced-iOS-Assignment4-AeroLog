@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5EAC06002EA636D20069FA59 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EAC05FF2EA636D10069FA59 /* QuickLook.framework */; };
+		5EAC060C2EA636D20069FA59 /* AeroLogQuickLookExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5EAC05FE2EA636D10069FA59 /* AeroLogQuickLookExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5ECA922F2EA6311D00169BD7 /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5ECA922E2EA6311C00169BD7 /* UniformTypeIdentifiers.framework */; };
 		5ECA923B2EA6311D00169BD7 /* AeroLogActionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5ECA922D2EA6311C00169BD7 /* AeroLogActionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5ED3DDA32EA34E7E004E9069 /* AeroLogShareExtention.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5ED3DD992EA34E7E004E9069 /* AeroLogShareExtention.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -26,6 +28,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5E742E4A2E6C731300D612E9;
 			remoteInfo = AeroLog;
+		};
+		5EAC060A2EA636D20069FA59 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5E742E432E6C731300D612E9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5EAC05FD2EA636D10069FA59;
+			remoteInfo = AeroLogQuickLookExtension;
 		};
 		5ECA92392EA6311D00169BD7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +61,7 @@
 			files = (
 				5ECA923B2EA6311D00169BD7 /* AeroLogActionExtension.appex in Embed Foundation Extensions */,
 				5ED3DDA32EA34E7E004E9069 /* AeroLogShareExtention.appex in Embed Foundation Extensions */,
+				5EAC060C2EA636D20069FA59 /* AeroLogQuickLookExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -62,6 +72,8 @@
 		5E4574762E6EC2F700F192BD /* AeroLogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AeroLogTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E4574872E6EC3CF00F192BD /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E742E4B2E6C731300D612E9 /* AeroLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AeroLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EAC05FE2EA636D10069FA59 /* AeroLogQuickLookExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AeroLogQuickLookExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EAC05FF2EA636D10069FA59 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
 		5ECA922D2EA6311C00169BD7 /* AeroLogActionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AeroLogActionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ECA922E2EA6311C00169BD7 /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
 		5ED3DD992EA34E7E004E9069 /* AeroLogShareExtention.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AeroLogShareExtention.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,6 +88,13 @@
 				Info.plist,
 			);
 			target = 5E742E4A2E6C731300D612E9 /* AeroLog */;
+		};
+		5EAC06102EA636D20069FA59 /* Exceptions for "AeroLogQuickLookExtension" folder in "AeroLogQuickLookExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 5EAC05FD2EA636D10069FA59 /* AeroLogQuickLookExtension */;
 		};
 		5ECA923F2EA6311D00169BD7 /* Exceptions for "AeroLogActionExtension" folder in "AeroLogActionExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -113,6 +132,14 @@
 				5ED3DDCF2EA3566A004E9069 /* Exceptions for "AeroLog" folder in "AeroLogShareExtention" target */,
 			);
 			path = AeroLog;
+			sourceTree = "<group>";
+		};
+		5EAC06012EA636D20069FA59 /* AeroLogQuickLookExtension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5EAC06102EA636D20069FA59 /* Exceptions for "AeroLogQuickLookExtension" folder in "AeroLogQuickLookExtension" target */,
+			);
+			path = AeroLogQuickLookExtension;
 			sourceTree = "<group>";
 		};
 		5ECA92302EA6311D00169BD7 /* AeroLogActionExtension */ = {
@@ -155,6 +182,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5EAC05FB2EA636D10069FA59 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5EAC06002EA636D20069FA59 /* QuickLook.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5ECA922A2EA6311C00169BD7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -180,6 +215,7 @@
 				5E4574882E6EC3CF00F192BD /* Tests */,
 				5ED3DD9A2EA34E7E004E9069 /* AeroLogShareExtention */,
 				5ECA92302EA6311D00169BD7 /* AeroLogActionExtension */,
+				5EAC06012EA636D20069FA59 /* AeroLogQuickLookExtension */,
 				5ED3DDAE2EA35106004E9069 /* Frameworks */,
 				5E742E4C2E6C731300D612E9 /* Products */,
 			);
@@ -193,6 +229,7 @@
 				5E4574872E6EC3CF00F192BD /* Tests.xctest */,
 				5ED3DD992EA34E7E004E9069 /* AeroLogShareExtention.appex */,
 				5ECA922D2EA6311C00169BD7 /* AeroLogActionExtension.appex */,
+				5EAC05FE2EA636D10069FA59 /* AeroLogQuickLookExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -203,6 +240,7 @@
 				5ED3DDAF2EA35106004E9069 /* WidgetKit.framework */,
 				5ED3DDB12EA35106004E9069 /* SwiftUI.framework */,
 				5ECA922E2EA6311C00169BD7 /* UniformTypeIdentifiers.framework */,
+				5EAC05FF2EA636D10069FA59 /* QuickLook.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -267,6 +305,7 @@
 			dependencies = (
 				5ED3DDA22EA34E7E004E9069 /* PBXTargetDependency */,
 				5ECA923A2EA6311D00169BD7 /* PBXTargetDependency */,
+				5EAC060B2EA636D20069FA59 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				5E742E4D2E6C731300D612E9 /* AeroLog */,
@@ -277,6 +316,28 @@
 			productName = AeroLog;
 			productReference = 5E742E4B2E6C731300D612E9 /* AeroLog.app */;
 			productType = "com.apple.product-type.application";
+		};
+		5EAC05FD2EA636D10069FA59 /* AeroLogQuickLookExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5EAC060F2EA636D20069FA59 /* Build configuration list for PBXNativeTarget "AeroLogQuickLookExtension" */;
+			buildPhases = (
+				5EAC05FA2EA636D10069FA59 /* Sources */,
+				5EAC05FB2EA636D10069FA59 /* Frameworks */,
+				5EAC05FC2EA636D10069FA59 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				5EAC06012EA636D20069FA59 /* AeroLogQuickLookExtension */,
+			);
+			name = AeroLogQuickLookExtension;
+			packageProductDependencies = (
+			);
+			productName = AeroLogQuickLookExtension;
+			productReference = 5EAC05FE2EA636D10069FA59 /* AeroLogQuickLookExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		5ECA922C2EA6311C00169BD7 /* AeroLogActionExtension */ = {
 			isa = PBXNativeTarget;
@@ -343,6 +404,9 @@
 					5E742E4A2E6C731300D612E9 = {
 						CreatedOnToolsVersion = 16.2;
 					};
+					5EAC05FD2EA636D10069FA59 = {
+						CreatedOnToolsVersion = 16.2;
+					};
 					5ECA922C2EA6311C00169BD7 = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -370,6 +434,7 @@
 				5E4574862E6EC3CF00F192BD /* Tests */,
 				5ED3DD982EA34E7E004E9069 /* AeroLogShareExtention */,
 				5ECA922C2EA6311C00169BD7 /* AeroLogActionExtension */,
+				5EAC05FD2EA636D10069FA59 /* AeroLogQuickLookExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -390,6 +455,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		5E742E492E6C731300D612E9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EAC05FC2EA636D10069FA59 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -434,6 +506,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5EAC05FA2EA636D10069FA59 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5ECA92292EA6311C00169BD7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -460,6 +539,11 @@
 			isa = PBXTargetDependency;
 			target = 5E742E4A2E6C731300D612E9 /* AeroLog */;
 			targetProxy = 5E45748B2E6EC3CF00F192BD /* PBXContainerItemProxy */;
+		};
+		5EAC060B2EA636D20069FA59 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5EAC05FD2EA636D10069FA59 /* AeroLogQuickLookExtension */;
+			targetProxy = 5EAC060A2EA636D20069FA59 /* PBXContainerItemProxy */;
 		};
 		5ECA923A2EA6311D00169BD7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -731,6 +815,58 @@
 			};
 			name = Release;
 		};
+		5EAC060D2EA636D20069FA59 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 27NWF7BXKM;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AeroLogQuickLookExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AeroLogQuickLookExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuhanchang.aerolog2025.AeroLogQuickLookExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5EAC060E2EA636D20069FA59 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 27NWF7BXKM;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AeroLogQuickLookExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AeroLogQuickLookExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuhanchang.aerolog2025.AeroLogQuickLookExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		5ECA923C2EA6311D00169BD7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -872,6 +1008,15 @@
 			buildConfigurations = (
 				5E742E5A2E6C731400D612E9 /* Debug */,
 				5E742E5B2E6C731400D612E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5EAC060F2EA636D20069FA59 /* Build configuration list for PBXNativeTarget "AeroLogQuickLookExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5EAC060D2EA636D20069FA59 /* Debug */,
+				5EAC060E2EA636D20069FA59 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

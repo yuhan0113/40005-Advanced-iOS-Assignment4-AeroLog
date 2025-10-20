@@ -200,7 +200,12 @@ struct ContentView: View {
     
     private func checkForSharedFlightCode() {
         let userDefaults = UserDefaults(suiteName: "group.com.yuhanchang.aerolog2025")
+        print("Main App: Checking for shared flight code...")
+        print("Main App: UserDefaults content: \(userDefaults?.dictionaryRepresentation() ?? [:])")
+        
         if let sharedFlightCode = userDefaults?.string(forKey: "sharedFlightCode") {
+            print("Main App: Found shared flight code: \(sharedFlightCode)")
+            
             // Clear the shared code
             userDefaults?.removeObject(forKey: "sharedFlightCode")
             userDefaults?.removeObject(forKey: "sharedFlightCodeDate")
@@ -210,6 +215,8 @@ struct ContentView: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 showFlightSearch = true
             }
+        } else {
+            print("Main App: No shared flight code found")
         }
     }
 }
