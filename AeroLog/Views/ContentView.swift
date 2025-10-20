@@ -8,6 +8,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ContentView: View {
     @StateObject private var viewModel = TaskViewModel()
@@ -150,6 +151,9 @@ struct ContentView: View {
             }
             .onAppear {
                 viewModel.fetchTasks()
+                checkForSharedFlightCode()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
                 checkForSharedFlightCode()
             }
             .sheet(isPresented: $showFlightSearch) {

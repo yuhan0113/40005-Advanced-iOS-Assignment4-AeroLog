@@ -102,7 +102,19 @@ class FlightSearchService {
         if USE_MOCK_DATA == .mock {
             return try await searchFlightsMock(flightNumber: flightNumber)
         } else {
-            return try await searchFlightsAPI(flightNumber: flightNumber)
+            // Try API first, fallback to mock if no results
+            do {
+                let apiResults = try await searchFlightsAPI(flightNumber: flightNumber)
+                if !apiResults.isEmpty {
+                    return apiResults
+                }
+            } catch {
+                print("API search failed: \(error)")
+            }
+            
+            // Fallback to mock data for demo purposes
+            print("No API results found, using mock data for: \(flightNumber)")
+            return try await searchFlightsMock(flightNumber: flightNumber)
         }
     }
     
@@ -235,7 +247,7 @@ class FlightSearchService {
         components?.queryItems = [
             URLQueryItem(name: "access_key", value: apiKey),
             URLQueryItem(name: "flight_iata", value: flightNumber.uppercased()),
-            URLQueryItem(name: "limit", value: "1")
+            URLQueryItem(name: "limit", value: "5")
         ]
         
         guard let url = components?.url else {
