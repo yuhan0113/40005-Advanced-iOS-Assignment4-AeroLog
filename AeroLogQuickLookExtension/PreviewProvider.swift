@@ -6,6 +6,7 @@
 //
 
 import QuickLook
+import UniformTypeIdentifiers
 
 class PreviewProvider: QLPreviewProvider, QLPreviewingController {
     
@@ -33,25 +34,36 @@ class PreviewProvider: QLPreviewProvider, QLPreviewingController {
      */
     
     func providePreview(for request: QLFilePreviewRequest) async throws -> QLPreviewReply {
-    
-        //You can create a QLPreviewReply in several ways, depending on the format of the data you want to return.
-        //To return Data of a supported content type:
-        
-        let contentType = UTType.plainText // replace with your data type
-        
-        let reply = QLPreviewReply.init(dataOfContentType: contentType, contentSize: CGSize.init(width: 800, height: 800)) { (replyToUpdate : QLPreviewReply) in
+        let contentType = UTType.plainText
+        let text = (try? String(contentsOf: request.fileURL, encoding: .utf8)) ?? ""
+        let code = extractFlightCode(from: text)
 
-            let data = Data("Hello world".utf8)
-            
-            //setting the stringEncoding for text and html data is optional and defaults to String.Encoding.utf8
-            replyToUpdate.stringEncoding = .utf8
-            
-            //initialize your data here
-            
-            return data
+        if let code {
+            let ud = UserDefaults(suiteName: "group.com.yuhanchang.aerolog2025")
+            ud?.set(code, forKey: "sharedFlightCode")
+            ud?.set(Date(), forKey: "sharedFlightCodeDate")
+            ud?.synchronize()
         }
-                
+
+        let message: String
+        if let code { message = "Flight \(code) saved to AeroLog. Open the app to add it." }
+        else { message = "No valid flight code found. Put something like QF123 in the file." }
+
+        let reply = QLPreviewReply(dataOfContentType: contentType, contentSize: .zero) { replyToUpdate in
+            replyToUpdate.stringEncoding = .utf8
+            return Data(message.utf8)
+        }
         return reply
+    }
+
+    private func extractFlightCode(from text: String) -> String? {
+        let pattern = #"[A-Z]{2,3}\d{1,4}"#
+        let regex = try? NSRegularExpression(pattern: pattern)
+        let range = NSRange(location: 0, length: text.utf16.count)
+        if let match = regex?.firstMatch(in: text, range: range) {
+            return (text as NSString).substring(with: match.range)
+        }
+        return nil
     }
 
 }

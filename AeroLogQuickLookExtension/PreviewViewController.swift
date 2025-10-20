@@ -26,7 +26,7 @@ class PreviewViewController: UIViewController, QLPreviewingController {
         do {
             text = try String(contentsOf: url, encoding: .utf8)
         } catch {
-            await updateLabel("Cannot read file contents.")
+            updateLabel("Cannot read file contents.")
             return
         }
 
@@ -34,7 +34,7 @@ class PreviewViewController: UIViewController, QLPreviewingController {
         let flightCode = extractFlightCode(from: text)
 
         guard let code = flightCode else {
-            await updateLabel("No valid flight code found in file.")
+            updateLabel("No valid flight code found in file.")
             return
         }
 
@@ -44,7 +44,7 @@ class PreviewViewController: UIViewController, QLPreviewingController {
         userDefaults?.set(Date(), forKey: "sharedFlightCodeDate")
         userDefaults?.synchronize()
 
-        await updateLabel("Flight \(code) saved to AeroLog. Open the app to add it.")
+        updateLabel("Flight \(code) saved to AeroLog. Open the app to add it.")
     }
 
     private func extractFlightCode(from text: String) -> String? {
@@ -57,8 +57,9 @@ class PreviewViewController: UIViewController, QLPreviewingController {
         return nil
     }
 
-    @MainActor
     private func updateLabel(_ text: String) {
-        messageLabel?.text = text
+        DispatchQueue.main.async { [weak self] in
+            self?.messageLabel?.text = text
+        }
     }
 }

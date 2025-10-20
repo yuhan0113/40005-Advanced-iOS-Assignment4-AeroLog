@@ -66,7 +66,7 @@ extension QuickLookPreviewController: QLPreviewControllerDataSource {
     func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
         // Create a flight preview item from the extension context
         guard let extensionItem = extensionContext?.inputItems.first as? NSExtensionItem,
-              let itemProvider = extensionItem.attachments?.first else {
+              let _ = extensionItem.attachments?.first else {
             return FlightPreviewItem(flightCode: "QF123", flightInfo: "Sample Flight")
         }
         
