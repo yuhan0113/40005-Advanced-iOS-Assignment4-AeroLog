@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXContainerItemProxy section */
+		091877A22EA63F89006D3A4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5E742E432E6C731300D612E9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5E742E4A2E6C731300D612E9;
+			remoteInfo = AeroLog;
+		};
 		5E45747A2E6EC2F700F192BD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5E742E432E6C731300D612E9 /* Project object */;
@@ -24,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0918779C2EA63F89006D3A4B /* AeroLogUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AeroLogUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E4574762E6EC2F700F192BD /* AeroLogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AeroLogTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E4574872E6EC3CF00F192BD /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E742E4B2E6C731300D612E9 /* AeroLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AeroLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -40,6 +48,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		0918779D2EA63F89006D3A4B /* AeroLogUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = AeroLogUITests;
+			sourceTree = "<group>";
+		};
 		5E4574882E6EC3CF00F192BD /* Tests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Tests;
@@ -56,6 +69,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		091877992EA63F89006D3A4B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5E4574732E6EC2F700F192BD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -85,6 +105,7 @@
 			children = (
 				5E742E4D2E6C731300D612E9 /* AeroLog */,
 				5E4574882E6EC3CF00F192BD /* Tests */,
+				0918779D2EA63F89006D3A4B /* AeroLogUITests */,
 				5E742E4C2E6C731300D612E9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -95,6 +116,7 @@
 				5E742E4B2E6C731300D612E9 /* AeroLog.app */,
 				5E4574762E6EC2F700F192BD /* AeroLogTests.xctest */,
 				5E4574872E6EC3CF00F192BD /* Tests.xctest */,
+				0918779C2EA63F89006D3A4B /* AeroLogUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -102,6 +124,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0918779B2EA63F89006D3A4B /* AeroLogUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 091877A62EA63F89006D3A4B /* Build configuration list for PBXNativeTarget "AeroLogUITests" */;
+			buildPhases = (
+				091877982EA63F89006D3A4B /* Sources */,
+				091877992EA63F89006D3A4B /* Frameworks */,
+				0918779A2EA63F89006D3A4B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				091877A32EA63F89006D3A4B /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				0918779D2EA63F89006D3A4B /* AeroLogUITests */,
+			);
+			name = AeroLogUITests;
+			packageProductDependencies = (
+			);
+			productName = AeroLogUITests;
+			productReference = 0918779C2EA63F89006D3A4B /* AeroLogUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		5E4574752E6EC2F700F192BD /* AeroLogTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5E45747C2E6EC2F700F192BD /* Build configuration list for PBXNativeTarget "AeroLogTests" */;
@@ -174,9 +219,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1620;
+				LastSwiftUpdateCheck = 2600;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					0918779B2EA63F89006D3A4B = {
+						CreatedOnToolsVersion = 26.0.1;
+						TestTargetID = 5E742E4A2E6C731300D612E9;
+					};
 					5E4574752E6EC2F700F192BD = {
 						CreatedOnToolsVersion = 16.2;
 						TestTargetID = 5E742E4A2E6C731300D612E9;
@@ -207,11 +256,19 @@
 				5E742E4A2E6C731300D612E9 /* AeroLog */,
 				5E4574752E6EC2F700F192BD /* AeroLogTests */,
 				5E4574862E6EC3CF00F192BD /* Tests */,
+				0918779B2EA63F89006D3A4B /* AeroLogUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0918779A2EA63F89006D3A4B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5E4574742E6EC2F700F192BD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -236,6 +293,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		091877982EA63F89006D3A4B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5E4574722E6EC2F700F192BD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -260,6 +324,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		091877A32EA63F89006D3A4B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5E742E4A2E6C731300D612E9 /* AeroLog */;
+			targetProxy = 091877A22EA63F89006D3A4B /* PBXContainerItemProxy */;
+		};
 		5E45747B2E6EC2F700F192BD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5E742E4A2E6C731300D612E9 /* AeroLog */;
@@ -273,6 +342,48 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		091877A42EA63F89006D3A4B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 46T5528366;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fivestar.AeroLogUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = AeroLog;
+			};
+			name = Debug;
+		};
+		091877A52EA63F89006D3A4B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 46T5528366;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fivestar.AeroLogUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = AeroLog;
+			};
+			name = Release;
+		};
 		5E45747D2E6EC2F700F192BD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -531,6 +642,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		091877A62EA63F89006D3A4B /* Build configuration list for PBXNativeTarget "AeroLogUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				091877A42EA63F89006D3A4B /* Debug */,
+				091877A52EA63F89006D3A4B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		5E45747C2E6EC2F700F192BD /* Build configuration list for PBXNativeTarget "AeroLogTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
