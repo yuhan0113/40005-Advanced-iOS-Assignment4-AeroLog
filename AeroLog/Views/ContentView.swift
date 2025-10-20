@@ -14,6 +14,7 @@ struct ContentView: View {
     @State private var showFlightSearch = false
     @State private var sheetDetent: PresentationDetent = .height(240)
     @State private var showingResults = false
+    @State private var sharedFlightCode: String? = nil
 
     var groupedFlights: [(date: Date, flights: [FlightTask])] {
         let grouped = Dictionary(grouping: viewModel.tasks) { task in
@@ -152,13 +153,14 @@ struct ContentView: View {
                 checkForSharedFlightCode()
             }
             .sheet(isPresented: $showFlightSearch) {
-                FlightSearchView(viewModel: viewModel, sheetDetent: $sheetDetent, showingResults: $showingResults)
+                FlightSearchView(viewModel: viewModel, sheetDetent: $sheetDetent, showingResults: $showingResults, preFilledFlightCode: sharedFlightCode)
                     .presentationDetents(showingResults ? [.large] : [.height(240), .large], selection: $sheetDetent)
                     .presentationDragIndicator(.hidden)
                     .interactiveDismissDisabled(showingResults)
                     .onDisappear {
                         sheetDetent = .height(240)
                         showingResults = false
+                        sharedFlightCode = nil
                     }
             }
         }
@@ -199,10 +201,10 @@ struct ContentView: View {
             userDefaults?.removeObject(forKey: "sharedFlightCode")
             userDefaults?.removeObject(forKey: "sharedFlightCodeDate")
             
-            // Show flight search with the shared code
+            // Store the shared code and show flight search
+            self.sharedFlightCode = sharedFlightCode
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 showFlightSearch = true
-                // You could pre-populate the search field here if needed
             }
         }
     }
