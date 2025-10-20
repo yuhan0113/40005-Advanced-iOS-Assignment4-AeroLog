@@ -1,48 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_12" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ObA-dk-sSI">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Action View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--Image-->
+        <scene sceneID="7MM-of-jgj">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ActionViewController" customModule="AeroLogActionExtension" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                <viewController title="Image" id="ObA-dk-sSI" customClass="ActionViewController" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zMn-AG-sqS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="528"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Processing flight code..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
-                                <rect key="frame" x="20" y="416" width="353" height="20.333333333333314"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <navigationBar contentMode="scaleToFill" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="NOA-Dm-cuz">
+                                <items>
+                                    <navigationItem id="3HJ-uW-3hn">
+                                        <barButtonItem key="leftBarButtonItem" title="Done" style="done" id="WYi-yp-eM6">
+                                            <connections>
+                                                <action selector="done" destination="ObA-dk-sSI" id="Qdu-qn-U6V"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Processing flight code..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ga-4F-77Z">
+                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                 <color key="textColor" systemColor="labelColor"/>
+                                 <nil key="highlightedColor"/>
+                             </label>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="kId-c2-rCX" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="5cJ-9S-tg5"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="kId-c2-rCX" secondAttribute="trailing" constant="20" id="H2f-8h-2d3"/>
-                            <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="vUN-K1-ej4"/>
+                            <constraint firstItem="VVe-Uw-JpX" firstAttribute="trailing" secondItem="NOA-Dm-cuz" secondAttribute="trailing" id="A05-Pj-hrr"/>
+                            <constraint firstItem="9ga-4F-77Z" firstAttribute="top" secondItem="NOA-Dm-cuz" secondAttribute="bottom" id="Fps-3D-QQW"/>
+                            <constraint firstItem="NOA-Dm-cuz" firstAttribute="leading" secondItem="VVe-Uw-JpX" secondAttribute="leading" id="HxO-8t-aoh"/>
+                            <constraint firstItem="VVe-Uw-JpX" firstAttribute="trailing" secondItem="9ga-4F-77Z" secondAttribute="trailing" id="Ozw-Hg-0yh"/>
+                            <constraint firstItem="9ga-4F-77Z" firstAttribute="leading" secondItem="VVe-Uw-JpX" secondAttribute="leading" id="XH5-ld-ONA"/>
+                            <constraint firstItem="VVe-Uw-JpX" firstAttribute="bottom" secondItem="9ga-4F-77Z" secondAttribute="bottom" id="eQg-nn-Zy4"/>
+                            <constraint firstItem="NOA-Dm-cuz" firstAttribute="top" secondItem="VVe-Uw-JpX" secondAttribute="top" id="we0-1t-bgp"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="VVe-Uw-JpX"/>
                     </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="528"/>
+                     <connections>
+                         <outlet property="imageView" destination="9ga-4F-77Z" id="5y6-5w-9QO"/>
+                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X47-rx-isc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="132" y="4"/>
         </scene>
     </scenes>
-    <resources>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-    </resources>
 </document>

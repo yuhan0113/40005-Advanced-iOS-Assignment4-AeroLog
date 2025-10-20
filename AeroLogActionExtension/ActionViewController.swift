@@ -2,7 +2,7 @@
 //  ActionViewController.swift
 //  AeroLogActionExtension
 //
-//  Created by Yu-Han on 18/10/2025.
+//  Created by Yu-Han on 20/10/2025.
 //
 
 import UIKit
@@ -10,6 +10,8 @@ import MobileCoreServices
 import UniformTypeIdentifiers
 
 class ActionViewController: UIViewController {
+
+    @IBOutlet weak var imageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,13 +40,13 @@ class ActionViewController: UIViewController {
                 DispatchQueue.main.async {
                     if let flightCode = flightCode {
                         self.saveFlightCodeToUserDefaults(flightCode)
-                        self.showSuccessMessage()
+                        self.showSuccessMessage(flightCode: flightCode)
                     } else {
                         self.showErrorMessage()
                     }
                     
                     // Delay to show message before closing
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                         self.completeRequest()
                     }
                 }
@@ -76,9 +78,9 @@ class ActionViewController: UIViewController {
         userDefaults?.set(Date(), forKey: "sharedFlightCodeDate")
     }
     
-    private func showSuccessMessage() {
+    private func showSuccessMessage(flightCode: String) {
         let alert = UIAlertController(title: "Flight Added",
-                                    message: "Flight code \(extractFlightCode(from: "") ?? "saved") added to AeroLog. Open the app to add it to your flights.",
+                                    message: "Flight code \(flightCode) added to AeroLog. Open the app to add it to your flights.",
                                     preferredStyle: .alert)
         present(alert, animated: true)
     }
@@ -92,5 +94,9 @@ class ActionViewController: UIViewController {
     
     private func completeRequest() {
         extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
+    }
+
+    @IBAction func done() {
+        completeRequest()
     }
 }
