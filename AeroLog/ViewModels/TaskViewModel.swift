@@ -2,8 +2,7 @@
 //  TaskViewModel.swift
 //  AeroLog
 //
-//  Created by Yu-Han on 6/9/2025.
-//  Handles task logic and state (MVVM) with CoreData persistence
+//  Created by Yu-Han on 06/09/2025
 //
 //  Edited by Riley Martin on 13/10/2025
 //
@@ -77,6 +76,9 @@ class TaskViewModel: ObservableObject {
         entity.isCompleted = newTask.isCompleted
 
         saveAndReload()
+
+        // Schedule local notification reminder
+        NotificationManager.shared.scheduleFlightReminder(for: newTask)
     }
     
     /// Fetches tasks from CoreData
@@ -109,6 +111,7 @@ class TaskViewModel: ObservableObject {
     func removeTask(at offsets: IndexSet) {
         for index in offsets {
             let task = tasks[index]
+            NotificationManager.shared.removeReminder(for: task)
             
             let request: NSFetchRequest<FlightTaskEntity> = FlightTaskEntity.fetchRequest()
             request.predicate = NSPredicate(format: "id == %@", task.id as CVarArg)
@@ -123,6 +126,7 @@ class TaskViewModel: ObservableObject {
     /// Toggles completion state of a given task (updates CoreData)
     func toggleCompletion(for task: FlightTask) {
         task.isCompleted.toggle()
+        if task.isCompleted { NotificationManager.shared.removeReminder(for: task) }
         
         let request: NSFetchRequest<FlightTaskEntity> = FlightTaskEntity.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", task.id as CVarArg)

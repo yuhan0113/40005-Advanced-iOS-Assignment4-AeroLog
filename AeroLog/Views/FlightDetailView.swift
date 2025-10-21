@@ -2,11 +2,10 @@
 //  FlightDetailView.swift
 //  AeroLog
 //
-//  Created by Yu-Han on 6/9/2025.
-//  Flight detail screen: weather, gate, and timing
+//  Created by Yu-Han on 06/09/2025
 //
 //  Edited by Riley Martin on 13/10/2025
-//
+//  Edited by Yu-Han on 15/10/2025
 
 import SwiftUI
 import CoreLocation
@@ -20,12 +19,36 @@ struct FlightDetailView: View {
     @State private var planeCoordinate: CLLocationCoordinate2D?
     @State private var liveFlightData: FlightSearchResult?
     @State private var isFlightActive = false
+    @State private var arrivalWeather: WeatherResponse?
+    @State private var weatherError: String = ""
     @State private var mapRegion = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 0, longitude: 0),
         span: MKCoordinateSpan(latitudeDelta: 50, longitudeDelta: 50)
     )
 
     let flightService = FlightSearchService.shared
+    let weatherService = WeatherService()
+
+    // MARK: - Distance/Duration helpers
+    var routeDistanceKm: Double? {
+        guard let dep = departureCoordinate, let arr = arrivalCoordinate else { return nil }
+        return Self.haversineDistanceKm(from: dep, to: arr)
+    }
+
+    var scheduledDurationHours: Double? {
+        guard let (dep, arr) = parseFlightTimes() else { return nil }
+        let seconds = arr.timeIntervalSince(dep)
+        return max(0, seconds) / 3600.0
+    }
+
+    static func haversineDistanceKm(from: CLLocationCoordinate2D, to: CLLocationCoordinate2D) -> Double {
+        let earthRadiusKm = 6371.0
+        let dLat = (to.latitude - from.latitude) * .pi / 180
+        let dLon = (to.longitude - from.longitude) * .pi / 180
+        let a = sin(dLat/2) * sin(dLat/2) + cos(from.latitude * .pi / 180) * cos(to.latitude * .pi / 180) * sin(dLon/2) * sin(dLon/2)
+        let c = 2 * atan2(sqrt(a), sqrt(1 - a))
+        return earthRadiusKm * c
+    }
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -40,6 +63,10 @@ struct FlightDetailView: View {
                 region: $mapRegion
             )
             .ignoresSafeArea()
+            // Bottom gradient to improve legibility of the overlay card
+            LinearGradient(colors: [Color.clear, Color.black.opacity(0.3), Color.black.opacity(0.45)], startPoint: .center, endPoint: .bottom)
+                .ignoresSafeArea()
+                .allowsHitTesting(false)
             
             if isLoading {
                 VStack {
@@ -55,11 +82,42 @@ struct FlightDetailView: View {
             
             if !isLoading {
                 VStack(spacing: 0) {
-                    FlightInfoCard(task: task)
-                        .frame(height: 280)
+                    VStack(spacing: 12) {
+                        HStack {
+                            Text(task.airline.rawValue)
+                                .font(.headline)
+                                .fontWeight(.bold)
+                            Spacer()
+                            StatusBadge(status: isFlightActive ? "Active" : "Scheduled")
+                        }
+                        FlightInfoCard(task: task)
+                    }
+                    .padding(.top, 12)
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 8)
+
+                    if let weather = arrivalWeather {
+                        WeatherSummaryView(weather: weather)
+                            .padding(.horizontal, 16)
+                            .padding(.top, 8)
+                            .transition(.opacity)
+                    } else if !weatherError.isEmpty {
+                        Text(weatherError)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.horizontal, 16)
+                            .padding(.top, 8)
+                    }
+
+                    if let km = routeDistanceKm, let hours = scheduledDurationHours {
+                        RouteStatsView(distanceKm: km, durationHours: hours)
+                            .padding(.horizontal, 16)
+                            .padding(.top, 8)
+                            .transition(.opacity)
+                    }
                 }
                 .background(.ultraThinMaterial)
-                .cornerRadius(24, corners: [.topLeft, .topRight])
+                .cornerRadius(24, corners: [.allCorners])
                 .shadow(color: .black.opacity(0.2), radius: 20, x: 0, y: -5)
                 .padding(.horizontal, 16)
                 .padding(.bottom, 0)
@@ -87,6 +145,16 @@ struct FlightDetailView: View {
         await arrivalTask
         
         await fetchLiveFlightDataIfActive()
+
+        // Fetch arrival weather once we have arrival coordinate
+        if let arr = arrivalCoordinate {
+            do {
+                let weather = try await weatherService.fetchWeather(for: arr)
+                await MainActor.run { self.arrivalWeather = weather }
+            } catch {
+                await MainActor.run { self.weatherError = "Unable to load weather." }
+            }
+        }
         
         await MainActor.run {
             if let dep = departureCoordinate, let arr = arrivalCoordinate {
@@ -384,30 +452,31 @@ struct FlightInfoCard: View {
     let task: FlightTask
     
     var body: some View {
-        VStack(spacing: 16) {
-                HStack(spacing: 12) {
+        VStack(spacing: 14) {
+            HStack(spacing: 12) {
                 Image(task.airline.imageName)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 50, height: 50)
+                    .frame(width: 44, height: 44)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .shadow(color: .black.opacity(0.1), radius: 2)
+                    .shadow(color: .black.opacity(0.08), radius: 2)
 
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(task.airline.rawValue)
-                            .font(.headline)
-                        Text(task.flightNumber)
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                    }
-
-                    Spacer()
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(task.airline.rawValue)
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                    Text(task.flightNumber)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
                 }
 
-                Divider()
+                Spacer()
+            }
 
-            HStack(spacing: 0) {
-                VStack(alignment: .leading, spacing: 8) {
+            Divider()
+
+            HStack(spacing: 16) {
+                VStack(alignment: .leading, spacing: 6) {
                     Text("DEPARTURE")
                         .font(.caption)
                         .fontWeight(.semibold)
@@ -416,50 +485,109 @@ struct FlightInfoCard: View {
                     Text(task.departure)
                         .font(.title3)
                         .fontWeight(.bold)
-                    
-                            Text(task.departureTime)
+
+                    Text(task.departureTime)
                         .font(.subheadline)
                         .foregroundColor(.blue)
                         .fontWeight(.medium)
-                        }
+                }
 
-                        Spacer()
-                
-                        Image(systemName: "airplane")
-                            .font(.title2)
+                Spacer()
+
+                Image(systemName: "arrow.right")
+                    .font(.headline)
                     .foregroundColor(.gray)
-                    .rotationEffect(.degrees(90))
-                
-                        Spacer()
 
-                VStack(alignment: .trailing, spacing: 8) {
+                Spacer()
+
+                VStack(alignment: .trailing, spacing: 6) {
                     Text("ARRIVAL")
                         .font(.caption)
                         .fontWeight(.semibold)
                         .foregroundColor(.secondary)
-                    
+
                     Text(task.arrival)
                         .font(.title3)
                         .fontWeight(.bold)
-                    
-                            Text(task.arrivalTime)
+
+                    Text(task.arrivalTime)
                         .font(.subheadline)
-                                .foregroundColor(.green)
+                        .foregroundColor(.green)
                         .fontWeight(.medium)
                 }
             }
+        }
+        .padding(16)
+    }
+}
 
-                Divider()
-
-                HStack {
-                Label("Flight Details", systemImage: "airplane.circle.fill")
+struct WeatherSummaryView: View {
+    let weather: WeatherResponse
+    
+    var body: some View {
+        HStack(spacing: 12) {
+            Image(systemName: weather.current.weather_icons.first ?? "cloud")
+                .font(.title2)
+                .foregroundColor(.blue)
+            
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Arrival Weather — \(weather.location.name), \(weather.location.country)")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                Text(weather.current.weather_descriptions.first ?? "—")
                     .font(.caption)
-                .foregroundColor(.secondary)
-
-                Spacer()
+                    .foregroundColor(.secondary)
+            }
+            
+            Spacer()
+            
+            VStack(alignment: .trailing) {
+                Text("\(Int(weather.current.temperature))°C")
+                    .font(.headline)
+                Text("Wind \(weather.current.wind_speed) km/h")
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
             }
         }
-        .padding(24)
+        .padding(12)
+        .background(Color(.systemBackground))
+        .cornerRadius(12)
+        .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
+    }
+}
+
+struct RouteStatsView: View {
+    let distanceKm: Double
+    let durationHours: Double
+
+    var body: some View {
+        HStack {
+            Label("Distance", systemImage: "ruler")
+                .font(.caption)
+                .foregroundColor(.secondary)
+            Text("\(String(format: "%.0f", distanceKm)) km")
+                .font(.subheadline)
+                .fontWeight(.semibold)
+
+            Spacer()
+
+            Label("Duration", systemImage: "clock")
+                .font(.caption)
+                .foregroundColor(.secondary)
+            Text(Self.formatHours(durationHours))
+                .font(.subheadline)
+                .fontWeight(.semibold)
+        }
+        .padding(12)
+        .background(Color(.systemBackground))
+        .cornerRadius(12)
+        .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
+    }
+
+    private static func formatHours(_ hours: Double) -> String {
+        let h = Int(hours)
+        let m = Int((hours - Double(h)) * 60)
+        return "\(h)h \(m)m"
     }
 }
 

@@ -6,8 +6,55 @@
 	<dict>
 		<key>AeroLog.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>AeroLogActionExtension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>AeroLogNotificationContent.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>AeroLogQuickLookExtension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>AeroLogShareExtention.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>5E4574752E6EC2F700F192BD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5E4574862E6EC3CF00F192BD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5E742E4A2E6C731300D612E9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5ED3DD982EA34E7E004E9069</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

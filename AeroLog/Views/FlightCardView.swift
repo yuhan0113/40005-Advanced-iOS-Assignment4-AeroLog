@@ -2,8 +2,7 @@
 //  FlightCardView.swift
 //  AeroLog
 //
-//  Created by Yu-Han on 6/9/2025.
-//  UI for single flight task (dashboard card)
+//  Created by Yu-Han on 06/09/2025
 //
 //  Edited by Riley Martin on 13/10/2025
 //

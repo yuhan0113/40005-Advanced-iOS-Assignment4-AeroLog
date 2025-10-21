@@ -16,11 +16,43 @@
 				<string>com.apple.maps.directionsrequest</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>AeroLog Flight File</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.yuhanchang.aerolog.flight</string>
+			</array>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+		</dict>
 	</array>
 	<key>MKDirectionsApplicationSupportedModes</key>
 	<array>
 		<string>MKDirectionsModePedestrian</string>
 		<string>MKDirectionsModePlane</string>
+	</array>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>AeroLog Flight File</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.yuhanchang.aerolog.flight</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>flight</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>text/plain</string>
+			</dict>
+		</dict>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

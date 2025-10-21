@@ -2,7 +2,7 @@
 //  FlightSearchView.swift
 //  AeroLog
 //
-//  Created by Riley Martin on 10/13/2025.
+//  Created by Riley Martin on 13/10/2025
 //
 
 import SwiftUI
@@ -14,6 +14,14 @@ struct FlightSearchView: View {
     @Binding var showingResults: Bool
     
     @State private var flightCode = ""
+    let preFilledFlightCode: String?
+    
+    init(viewModel: TaskViewModel, sheetDetent: Binding<PresentationDetent>, showingResults: Binding<Bool>, preFilledFlightCode: String? = nil) {
+        self.viewModel = viewModel
+        self._sheetDetent = sheetDetent
+        self._showingResults = showingResults
+        self.preFilledFlightCode = preFilledFlightCode
+    }
     @State private var isSearching = false
     @State private var hasSearched = false
     @State private var errorMessage = ""
@@ -140,6 +148,15 @@ struct FlightSearchView: View {
             Button("OK", role: .cancel) { }
         } message: {
             Text(errorMessage)
+        }
+        .onAppear {
+            if let preFilled = preFilledFlightCode {
+                flightCode = preFilled
+                // Automatically search if we have a pre-filled code
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    searchFlights()
+                }
+            }
         }
     }
     

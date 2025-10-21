@@ -1,5 +1,8 @@
-//  Created by Yu-Han on 6/9/2025.
-//  Error types and handling logic
+//
+//  ErrorHandler.swift
+//
+//  Created by Yu-Han on 06/09/2025
+
 
 import Foundation
 

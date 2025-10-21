@@ -1,5 +1,10 @@
-//  Created by Yu-Han on 6/9/2025.
-//  Editable user profile view
+//
+//  UserProfileView.swift
+//  AeroLog
+//
+//  Created by Yu-Han on 06/09/2025
+//
+
 
 import SwiftUI
 

@@ -2,8 +2,7 @@
 //  BaseTask.swift
 //  AeroLog
 //
-//  Created by Yu-Han on 6/9/2025.
-//  Base class implementing TravelTask
+//  Created by Yu-Han on 06/09/2025.
 //
 
 import Foundation

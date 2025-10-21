@@ -1,5 +1,9 @@
-//  Created by Yu-Han on 8/9/2025.
-//  Airline supported with name, code, and image (logo)
+//
+//  Airline.swift
+//  AeroLog
+//
+//  Created by Yu-Han on 06/09/2025.
+//
 
 import SwiftUI
 

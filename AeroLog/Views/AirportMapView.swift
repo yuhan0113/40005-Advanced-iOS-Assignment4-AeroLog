@@ -2,7 +2,7 @@
 //  AirportMapView.swift
 //  AeroLog
 //
-//  Created by Yu-Han on 7/10/2025.
+//  Created by Yu-Han on 07/10/2025
 //
 
 import SwiftUI

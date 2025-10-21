@@ -2,14 +2,14 @@
 //  ContentView.swift
 //  AeroLog
 //
-//  Created by Yu-Han on 6/9/2025.
-//  Dashboard UI shows "My Flights"
+//  Created by Yu-Han on 06/09/2025
 //
 //  Edited by Riley Martin on 13/10/2025
 //
 
 import SwiftUI
 import MessageUI
+import Combine
 
 struct ContentView: View {
     @StateObject private var viewModel = TaskViewModel()
@@ -17,6 +17,7 @@ struct ContentView: View {
     @State private var sheetDetent: PresentationDetent = .height(240)
     @State private var showingResults = false
     @State private var shareTask: FlightTask?
+    @State private var sharedFlightCode: String? = nil
 
     var groupedFlights: [(date: Date, flights: [FlightTask])] {
         let grouped = Dictionary(grouping: viewModel.tasks) { task in
@@ -161,15 +162,20 @@ struct ContentView: View {
             }
             .onAppear {
                 viewModel.fetchTasks()
+                checkForSharedFlightCode()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                checkForSharedFlightCode()
             }
             .sheet(isPresented: $showFlightSearch) {
-                FlightSearchView(viewModel: viewModel, sheetDetent: $sheetDetent, showingResults: $showingResults)
+                FlightSearchView(viewModel: viewModel, sheetDetent: $sheetDetent, showingResults: $showingResults, preFilledFlightCode: sharedFlightCode)
                     .presentationDetents(showingResults ? [.large] : [.height(240), .large], selection: $sheetDetent)
                     .presentationDragIndicator(.hidden)
                     .interactiveDismissDisabled(showingResults)
                     .onDisappear {
                         sheetDetent = .height(240)
                         showingResults = false
+                        sharedFlightCode = nil
                     }
             }
         }
@@ -212,6 +218,28 @@ struct ContentView: View {
     private func refreshFlights() async {
         await MainActor.run {
             viewModel.fetchTasks()
+        }
+    }
+    
+    private func checkForSharedFlightCode() {
+        let userDefaults = UserDefaults(suiteName: "group.com.yuhanchang.aerolog2025")
+        print("Main App: Checking for shared flight code...")
+        print("Main App: UserDefaults content: \(userDefaults?.dictionaryRepresentation() ?? [:])")
+        
+        if let sharedFlightCode = userDefaults?.string(forKey: "sharedFlightCode") {
+            print("Main App: Found shared flight code: \(sharedFlightCode)")
+            
+            // Clear the shared code
+            userDefaults?.removeObject(forKey: "sharedFlightCode")
+            userDefaults?.removeObject(forKey: "sharedFlightCodeDate")
+            
+            // Store the shared code and show flight search
+            self.sharedFlightCode = sharedFlightCode
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                showFlightSearch = true
+            }
+        } else {
+            print("Main App: No shared flight code found")
         }
     }
 }
