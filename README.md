@@ -39,7 +39,6 @@ Aerolog has been extended to include more advanced iOS development features:
 - Xcode 15+
 - iOS 17+ device or simulator
 - SwiftUI, Combine, CoreData, MapKit
-- Free API key from https://www.weatherapi.com
 
 ### Setup:
 1. Clone the repo:
@@ -92,6 +91,21 @@ Aerolog is designed for quick flight task management with a clean, intuitive UI.
 ### 👤 User Profile
 - Access from **top-left icon** on Dashboard.
 - Allows editing of user name, email, and frequent flyer number (locally stored).
+
+---
+
+## APIs
+Flight Tracking API - AviationStackAPI
+
+Weather API - WeatherAPI (Free)
+
+---
+
+## System Extensions (Target Products)
+
+Share Extension
+
+Notifications Extension
 
 ---
 
