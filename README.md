@@ -19,7 +19,7 @@ Bachelor of IT, University of Technology Sydney
 
 ---
 
-## Updates for Assessment Task 3 (Project 2)
+## Updates for Assessment Task 4
 Aerolog has been extended to include more advanced iOS development features:
 
 ### ✅ New Features
